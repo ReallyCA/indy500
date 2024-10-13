@@ -1,0 +1,89 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class CarController : MonoBehaviour
+{
+    [Header("Car Settings")]
+    public float accelerationF = 2.0f;
+    public float decelF = 1.0f;
+    public float turnF = 3.5f;
+    public float driftF = 0.95f;
+    public float maxspeed = 5f;
+
+    float currAcceleration = 0;
+    float currSteering = 0;
+    float rotationAngle = 0;
+    float velocity = 0;
+
+
+    Rigidbody2D carRigidbody2D;
+
+    // Called when script instance is being loaded
+    void Awake(){
+        carRigidbody2D = GetComponent<Rigidbody2D>();
+    }
+
+    // Start is called before the first frame update
+    void Start(){
+        
+    }
+
+    // Update is called once per frame
+    void Update(){
+        
+    }
+
+    // Frame-rate independent physics calculations
+    void FixedUpdate(){
+        ApplyEngineForce();
+        KillOrthogonalVelocity();
+        ApplySteering();
+    }
+
+    //Creates a force to accelerate/deccelerate the car, also limits top speed
+    void ApplyEngineForce(){
+        velocity = Vector2.Dot(transform.up, carRigidbody2D.velocity);
+
+        if (velocity > maxspeed && currAcceleration > 0){ // limiting front top speed
+            return;
+        }
+        if (velocity < -maxspeed * 0.5f && currAcceleration < 0){ // reverse top speed
+            return;
+        }
+
+        if (carRigidbody2D.velocity.sqrMagnitude > maxspeed * maxspeed && currAcceleration > 0){
+            return; // for cases where the car is not going straight
+        }
+
+        if (currAcceleration == 0){ // applies deacceleration if the throttle is off
+            carRigidbody2D.drag = Mathf.Lerp(carRigidbody2D.drag, decelF, Time.fixedDeltaTime * 3);
+        } else carRigidbody2D.drag = 0;
+        Vector2 engineForceVector = transform.up * currAcceleration * accelerationF;
+        carRigidbody2D.AddForce(engineForceVector, ForceMode2D.Force);
+    }
+
+    //Based on current steering input, the rotational angle is updated and applied
+    void ApplySteering(){
+        float minSpeedBeforeTurning = (carRigidbody2D.velocity.magnitude / 8);
+        minSpeedBeforeTurning = Mathf.Clamp01(minSpeedBeforeTurning);
+        
+        rotationAngle -= currSteering * turnF * minSpeedBeforeTurning;
+        carRigidbody2D.MoveRotation(rotationAngle);
+
+    }
+
+    // Ensures that the car turns smoothly basically
+    void KillOrthogonalVelocity(){
+        Vector2 forwardVelocity = transform.up * Vector2.Dot(carRigidbody2D.velocity, transform.up);
+        Vector2 rightVelocity = transform.right * Vector2.Dot(carRigidbody2D.velocity, transform.right);
+
+        carRigidbody2D.velocity = forwardVelocity + rightVelocity * driftF;
+    }
+
+    // Updates what the player wants the car to do (i.e turn/move forward)
+    public void SetInputVector(Vector2 inputVector){
+        currSteering = inputVector.x;
+        currAcceleration = inputVector.y;
+    }
+}
