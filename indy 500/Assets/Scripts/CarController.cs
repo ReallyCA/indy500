@@ -13,7 +13,7 @@ public class CarController : MonoBehaviour
 
     float currAcceleration = 0;
     float currSteering = 0;
-    float rotationAngle = 0;
+    float rotationAngle = 180;
     float velocity = 0;
 
 
