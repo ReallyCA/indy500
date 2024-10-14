@@ -377,7 +377,9 @@
 "Assets/Scripts/CarInputHandler.cs"
 "Assets/Scripts/CarLapCounter.cs"
 "Assets/Scripts/CheckPoint.cs"
-"Assets/Scripts/LapCounter.cs"
+"Assets/Scripts/EventManager.cs"
+"Assets/Scripts/Laps.cs"
+"Assets/Scripts/Timer.cs"
 -langversion:9.0
 /deterministic
 /optimize+

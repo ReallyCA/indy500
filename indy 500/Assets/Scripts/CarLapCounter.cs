@@ -19,12 +19,10 @@ public class CarLapCounter : MonoBehaviour
             if (currentCheckpoint == totalCheckpoints){
                 lapCounter += 1;
                 currentCheckpoint = 0;
-            }
-            if (lapCounter == 0){
-                // startTimer();
+                EventManager.OnLapUpdate(lapCounter);
             }
             print("Laps Done: " + lapCounter);
-            
         }
     }
+    
 }

@@ -13,7 +13,7 @@ public class CarController : MonoBehaviour
 
     float currAcceleration = 0;
     float currSteering = 0;
-    float rotationAngle = 0;
+    float rotationAngle = 90;
     float velocity = 0;
 
 
@@ -75,5 +75,11 @@ public class CarController : MonoBehaviour
     public void SetInputVector(Vector2 inputVector){
         currSteering = inputVector.x;
         currAcceleration = inputVector.y;
+    }
+    void OnTriggerEnter2D(Collider2D collider2D){
+        if (collider2D.CompareTag("Wall")){ // checks if we hit the previous sequential checkpoint
+            Vector2 engineForceVector = transform.up * currAcceleration * accelerationF;
+            carRigidbody2D.AddForce(-engineForceVector, ForceMode2D.Force);
+        } 
     }
 }

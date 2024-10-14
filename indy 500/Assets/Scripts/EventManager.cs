@@ -1,0 +1,16 @@
+using UnityEngine.Events;
+
+public static class EventManager
+{
+    public static event UnityAction TimerStart;
+    public static event UnityAction TimerStop;
+    public static event UnityAction<float> TimerUpdate;
+    public static event UnityAction StopGame;
+    public static event UnityAction<int> LapUpdate;
+
+    public static void OnTimerStart() => TimerStart?.Invoke();
+    public static void OnTimerStop() => TimerStop?.Invoke();
+    public static void OnTimerUpdate(float value) => TimerUpdate?.Invoke(value);
+    public static void OnStopGame() => StopGame?.Invoke();
+    public static void OnLapUpdate(int laps) => LapUpdate?.Invoke(laps);
+}
