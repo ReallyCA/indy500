@@ -13,25 +13,15 @@ public class CarController : MonoBehaviour
 
     float currAcceleration = 0;
     float currSteering = 0;
-    float rotationAngle = 180;
+    float rotationAngle = 0;
     float velocity = 0;
 
 
-    Rigidbody2D carRigidbody2D;
+    Rigidbody2D carRigidbody2D; // Refers to the car
 
-    // Called when script instance is being loaded
+    // Called when script instance is being loaded, generates the car's body
     void Awake(){
         carRigidbody2D = GetComponent<Rigidbody2D>();
-    }
-
-    // Start is called before the first frame update
-    void Start(){
-        
-    }
-
-    // Update is called once per frame
-    void Update(){
-        
     }
 
     // Frame-rate independent physics calculations
