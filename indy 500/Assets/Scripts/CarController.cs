@@ -1,9 +1,23 @@
+/***********************************************************************
+* file: CarController.cs
+* author: Ivan Trinh, Anthony Jimenez
+* class: CS 4700 - Game Development
+* assignment: Program 3
+* date last modified: 10/13/2024
+*
+* purpose: This program is used by the car in order to actually move the
+* car. With user input, the car should behave similar to an actual car,
+* where it slows down naturally without any throttle, and turn naturally
+* depending on the velocity and angle it's going at.
+*
+***********************************************************************/
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class CarController : MonoBehaviour
 {
+    // Base Settings for the car, can be adjusted to preference
     [Header("Car Settings")]
     public float accelerationF = 2.0f;
     public float decelF = 1.0f;
@@ -11,6 +25,7 @@ public class CarController : MonoBehaviour
     public float driftF = 0.95f;
     public float maxspeed = 5f;
 
+    // Parameters for the car during gameplay
     float currAcceleration = 0;
     float currSteering = 0;
     float rotationAngle = 90;
@@ -76,6 +91,8 @@ public class CarController : MonoBehaviour
         currSteering = inputVector.x;
         currAcceleration = inputVector.y;
     }
+
+    // should basically ground the car to a halt when hitting a wall
     void OnTriggerEnter2D(Collider2D collider2D){
         if (collider2D.CompareTag("Wall")){ // checks if we hit the previous sequential checkpoint
             Vector2 engineForceVector = transform.up * currAcceleration * accelerationF;

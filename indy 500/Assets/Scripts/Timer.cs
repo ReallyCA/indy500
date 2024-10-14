@@ -1,3 +1,16 @@
+/***********************************************************************
+* file: Timer.cs
+* author: chunky bacon games
+* class: CS 4700 - Game Development
+* assignment: Program 3
+* date last modified: 10/13/2024
+*
+* purpose: This program was developed by youtube channel
+* chunky bacon games. Some modifications have been done by us,
+* mainly formatting in order to make sure that it only displays seconds.
+* The program using TMPro in order to update the text on screen.
+*
+***********************************************************************/
 using System;
 using UnityEngine;
 using TMPro;
