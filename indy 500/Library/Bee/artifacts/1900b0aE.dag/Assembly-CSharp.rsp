@@ -376,6 +376,7 @@
 "Assets/Scripts/CarController.cs"
 "Assets/Scripts/CarInputHandler.cs"
 "Assets/Scripts/CarLapCounter.cs"
+"Assets/Scripts/CarSfxHandler.cs"
 "Assets/Scripts/CheckPoint.cs"
 "Assets/Scripts/EventManager.cs"
 "Assets/Scripts/Laps.cs"

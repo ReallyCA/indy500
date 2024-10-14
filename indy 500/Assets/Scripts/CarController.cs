@@ -78,6 +78,11 @@ public class CarController : MonoBehaviour
 
     }
 
+    // returns the velocity regardless of angle
+    public float GetVelocityMagnitude(){
+        return carRigidbody2D.velocity.magnitude;
+    } 
+
     // Ensures that the car turns smoothly basically
     void KillOrthogonalVelocity(){
         Vector2 forwardVelocity = transform.up * Vector2.Dot(carRigidbody2D.velocity, transform.up);
@@ -90,13 +95,5 @@ public class CarController : MonoBehaviour
     public void SetInputVector(Vector2 inputVector){
         currSteering = inputVector.x;
         currAcceleration = inputVector.y;
-    }
-
-    // should basically ground the car to a halt when hitting a wall
-    void OnTriggerEnter2D(Collider2D collider2D){
-        if (collider2D.CompareTag("Wall")){ // checks if we hit the previous sequential checkpoint
-            Vector2 engineForceVector = transform.up * currAcceleration * accelerationF;
-            carRigidbody2D.AddForce(-engineForceVector, ForceMode2D.Force);
-        } 
     }
 }
